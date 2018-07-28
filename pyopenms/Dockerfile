@@ -43,8 +43,8 @@ RUN apk update --no-cache --update-cache && \
           -DCMAKE_BUILD_TYPE=Release \
           -DWITH_GUI=Off \
           -DENABLE_TUTORIALS=Off \
-          -PYOPENMS=ON \
-          -DCMAKE_INSTALL_PREFIX=/usr/local/ \
+          -DPYOPENMS=ON \
+          -DCMAKE_INSTALL_PREFIX=/usr/local \
          /opt/OpenMS && \
     make OpenMS pyopenms && \
     make install && \
