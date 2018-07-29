@@ -6,6 +6,6 @@ RUN apt-get update -y && \
         	libglib2.0-0 && \
     pip install --no-cache-dir -U pip && \
     pip install --no-cache-dir -U numpy && \
-    pip install --no-cache-dir -U pyopenms && \
+    pip install --no-cache-dir -U pyopenms==2.3.0.4 && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
