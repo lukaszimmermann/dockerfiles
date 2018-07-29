@@ -1,0 +1,70 @@
+FROM python:3.7.0-slim-stretch
+
+ARG NJOBS=1
+WORKDIR /tmp
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+        autoconf \
+        automake \
+        cmake \
+        g++ \
+        libtool \
+        make \
+        patch \
+        qtdeclarative5-dev \
+        libqt5opengl5-dev \
+        libqt5svg5-dev \
+    	git && \
+    pip install --no-cache-dir -U pip && \
+    pip install --no-cache-dir -U setuptools && \
+    pip install --no-cache-dir -U autowrap && \
+    pip install --no-cache-dir -U nose && \
+    pip install --no-cache-dir -U numpy  && \
+    pip install --no-cache-dir -U wheel && \
+    git clone -b develop https://github.com/OpenMS/OpenMS.git && \
+    cd /tmp/OpenMS && \
+    git submodule init && \
+    git submodule update --remote --recursive contrib && \
+    cd /usr/local && \
+    cmake -DBUILD_TYPE=ALL -DFORCE_REBUILD=ON /tmp/OpenMS/contrib && \
+    mkdir -p /tmp/OpenMS-build && \
+    cd /tmp/OpenMS-build && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+          -DWITH_GUI=Off \
+          -DENABLE_TUTORIALS=Off \
+          -DPYOPENMS=ON \
+          -DCMAKE_INSTALL_PREFIX=/usr/local \
+          /tmp/OpenMS && \
+    make -j${NJOBS} pyopenms && \
+    cd pyOpenMS && \
+    python run_nose.py && \
+    python run_memleaks.py && \
+    python setup.py install && \
+    apt-get purge -y \
+        autoconf \
+        automake \
+        cmake \
+        g++ \
+        libtool \
+        make \
+        patch \
+        qtdeclarative5-dev \
+        libqt5opengl5-dev \
+        libqt5svg5-dev \
+        git && \
+    apt-get --purge -y autoremove && \
+    apt-get -y clean && \
+    apt-get -y autoclean && \    
+    rm -rf /usr/local/CMakeCache.txt \
+           /usr/local/CMakeFiles \
+           /usr/local/Makefile \
+           /usr/local/README_contrib.txt \
+           /usr/local/archives \
+           /usr/local/cmake_install.cmake \
+           /usr/local/contrib_build.log \
+           /usr/local/src \
+           /opt \
+           /var/tmp/* \
+           /tmp/* \
+           /var/lib/apt/lists/*
+
