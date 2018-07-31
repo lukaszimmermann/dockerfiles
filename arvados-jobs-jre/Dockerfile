@@ -1,4 +1,5 @@
 FROM arvados/jobs:latest
+LABEL maintainer="luk.zim91@gmail.com"
 
 USER root
 RUN echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list && \
