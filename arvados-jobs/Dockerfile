@@ -11,10 +11,10 @@ RUN apk update --no-cache -U && \
     pip install --no-cache-dir -U arvados-python-client && \
     pip install --no-cache-dir -U arvados-cwl-runner && \
     addgroup -S crunch && \
-    adduser -g 'Crunch execution user' -DHSs /bin/sh -G crunch crunch && \
+    adduser -g 'Crunch execution user' -DSs /bin/sh -h /home/crunch -G crunch crunch && \
     apk del --purge .builddeps && \
     rm -rf /tmp/* /var/tmp/* && \
-    mkdir -p /keep /tmp/crunch-src /tmp/crunch-job && \
-    chown -R crunch:crunch /keep /tmp/crunch-src /tmp/crunch-job && \
+    mkdir -p /keep /tmp/crunch-src /tmp/crunch-job /home/crunch && \
+    chown -R crunch:crunch /keep /tmp/crunch-src /tmp/crunch-job /home/crunch && \
     chmod -R 0700 /tmp/crunch-src /tmp/crunch-job
 USER crunch
