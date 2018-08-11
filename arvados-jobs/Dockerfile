@@ -7,6 +7,9 @@ RUN apk update --no-cache -U && \
       curl-dev \
       gcc \
       git \
+      linux-headers \
+      libxml2-dev \
+      libxslt-dev \
       musl-dev && \
     pip install --no-cache-dir -U arvados-python-client && \
     pip install --no-cache-dir -U arvados-cwl-runner && \
@@ -18,3 +21,4 @@ RUN apk update --no-cache -U && \
     chown -R crunch:crunch /keep /tmp/crunch-src /tmp/crunch-job /home/crunch && \
     chmod -R 0700 /tmp/crunch-src /tmp/crunch-job
 USER crunch
+
