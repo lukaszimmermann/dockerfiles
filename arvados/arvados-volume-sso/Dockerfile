@@ -6,8 +6,7 @@ LABEL maintainer="luk.zim91@gmail.com"
 ENV PGDATA /tmp/postgresdata
 
 WORKDIR /tmp
-RUN ruby -e 'puts rand(2**128).to_s(36)' > /tmp/databasepassword && \
-    apt-get update -y && \
+RUN apt-get update -y && \
     apt-get install -y --no-install-suggests --no-install-recommends wget && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
@@ -16,7 +15,8 @@ RUN ruby -e 'puts rand(2**128).to_s(36)' > /tmp/databasepassword && \
       postgresql-10 \
       postgresql-client-10
 USER postgres
-RUN /usr/lib/postgresql/10/bin/initdb \
+RUN ruby -e 'puts rand(2**128).to_s(36)' > /tmp/dbpass && sync && \
+    /usr/lib/postgresql/10/bin/initdb \
       --username=postgres \
       -D "${PGDATA}" \
       --locale="${LANG}" && \
@@ -27,7 +27,7 @@ RUN /usr/lib/postgresql/10/bin/initdb \
       start && \
     /usr/lib/postgresql/10/bin/psql \
       -e \
-      -c "CREATE ROLE arvados_sso PASSWORD '<(/tmp/databasepassword)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;" && \
+      -c "CREATE ROLE arvados_sso PASSWORD '$(cat /tmp/dbpass)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;" && \
     /usr/lib/postgresql/10/bin/psql \
       -e \
       -c "CREATE DATABASE arvados_sso_production OWNER arvados_sso ENCODING 'UTF8' TEMPLATE template0;" && \
@@ -37,7 +37,8 @@ RUN /usr/lib/postgresql/10/bin/initdb \
 ##################################################
 FROM alpine:3.8 as data
 COPY --from=build /tmp/postgresdata /opt/data
-COPY --from=build /tmp/databasepassword /tmp/databasepassword
-COPY entrypoint.sh /
+COPY --from=build /tmp/dbpass /tmp/dbpass
+COPY entrypoint.sh /opt/entrypoint.sh
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+

@@ -38,7 +38,7 @@ RUN apt-get update -y && \
        nginx-light \
        libpq-dev && \
     gem install bundler && \
-    /usr/bin/apt-key adv --keyserver pool.sks-keyservers.net --recv 1078ECD7 && \
+    /usr/bin/apt-key adv --recv 1078ECD7 && \
     echo "deb http://apt.arvados.org/ stretch main" | tee /etc/apt/sources.list.d/arvados.list && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends --no-install-suggests \
