@@ -1,11 +1,18 @@
 FROM ruby:2.3.7-slim-stretch
 LABEL maintainer="luk.zim91@gmail.com"
 
+# Set the locale
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
 # Change the workdir to /tmp, so all temporary files will be deleted at
 # the end of the next RUN instruction
 WORKDIR /tmp
 
 # We need to do the following things for all Arvados related serviced
+# 0. Install the locales that we need for the database
 # 1. Install the packages dirmngr and gnupg2 for adding the package key
 # 2. Install the packages that are the dependencies of arvados-sso-server and
 #    arvados-api-server (nginx-light and libpq-dev)
@@ -14,6 +21,11 @@ WORKDIR /tmp
 # 5. Add the Arvados package repository
 # 6. Update the package index and clear all temporary files
 RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+      locales && \
+    echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen && \
+    locale-gen && \
+    apt-get update -y && \
     apt-get install -y --no-install-recommends --no-install-suggests \
        dirmngr \
        gnupg2 \
