@@ -7,7 +7,8 @@ RUN  apt-get update -y && \
      apt-get install -y --no-install-recommends --no-install-suggests \
        gcc \
        g++ \
-       libsqlite3-dev && \
+       libsqlite3-dev \
+       ruby2.3-dev && \
      apt-get install -y --no-install-recommends --no-install-suggests \
        arvados-sso-server && \
      apt-get purge -y \
