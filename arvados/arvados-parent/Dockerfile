@@ -16,6 +16,9 @@ WORKDIR /tmp
 # 6. Update the package index and clear all temporary files
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends --no-install-suggests \
+      apt-utils && \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
       locales && \
     echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen && sync && \
     locale-gen && sync &&  \
