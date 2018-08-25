@@ -1,7 +1,9 @@
 FROM lukaszimmermann/arvados-parent:latest
 LABEL maintainer="luk.zim91@gmail.com"
 
-RUN  apt-get update -y && \
+COPY entrypoint.sh /opt/entrypoint.sh
+RUN  chmod +x /opt/entrypoint.sh && \
+     apt-get update -y && \
      apt-get install -y --no-install-recommends --no-install-suggests \
        make && \
      apt-get install -y --no-install-recommends --no-install-suggests \
@@ -21,3 +23,4 @@ RUN  apt-get update -y && \
       apt-get clean -y && \
       apt-get autoclean -y && \
       rm -rf /tmp/* /var/tmp/*
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
