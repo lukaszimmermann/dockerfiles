@@ -10,7 +10,7 @@ WORKDIR /tmp
 # 2. Install the packages that are the dependencies of arvados-sso-server and
 #    arvados-api-server (nginx-light and libpq-dev)
 # 3. Install bundler gem
-# 4.. Add the key
+# 4. Add the key
 # 5. Add the Arvados package repository
 # 6. Update the package index and clear all temporary files
 RUN apt-get update -y && \
