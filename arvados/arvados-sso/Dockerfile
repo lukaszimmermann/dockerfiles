@@ -15,7 +15,8 @@ RUN  apt-get update -y && \
        make \
        gcc \
        g++ \
-       libsqlite3-dev && \
+       libsqlite3-dev \
+       ruby2.3-dev && \
       apt-get --purge -y autoremove && \
       apt-get clean -y && \
       apt-get autoclean -y && \
