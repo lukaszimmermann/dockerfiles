@@ -41,6 +41,16 @@ RUN apt-get update -y && \
     /usr/bin/apt-key adv --keyserver pool.sks-keyservers.net --recv 1078ECD7 && \
     echo "deb http://apt.arvados.org/ stretch main" | tee /etc/apt/sources.list.d/arvados.list && \
     apt-get update -y && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+       wget && \
+    cd /usr/local/bin && \
+    wget -q https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && sync && \
+    chmod +x wait-for-it.sh && \
+    apt-get purge -y \
+       wget && \
+    apt-get --purge -y autoremove && \
+    apt-get -y clean && \
+    apt-get -y autoclean && \
     rm -rf /tmp/* /var/tmp/* && sync
 
 # Set the locale
