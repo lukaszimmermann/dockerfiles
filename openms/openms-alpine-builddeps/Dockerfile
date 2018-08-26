@@ -46,8 +46,8 @@ RUN apk update --no-cache -U && \
       -no-harfbuzz \
       -no-dbus  \
       -no-feature-regularexpression && \
-      make && \
-      make install && sync && \
+      make --quiet && sync && \
+      make --quiet install && sync && \
     cd /tmp && \
     rm -rf /tmp/qtbase-everywhere-src-5.11.1 && \
     git clone https://github.com/OpenMS/contrib.git && \
