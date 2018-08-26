@@ -31,18 +31,18 @@ RUN apk update --no-cache -U && \
       -strip \
       -nomake tools \
       -nomake examples \
-	    -nomake tests \
-	    -no-widgets \
-	    -no-gtk \
-	    -no-cups \
-	    -no-gif \
-	    -no-ico \
-	    -no-libjpeg \
-	    -no-sqlite \
-	    -no-opengl \
-	    -no-evdev \
-	    -no-harfbuzz \
-	    -no-dbus  \
+      -nomake tests \
+      -no-widgets \
+      -no-gtk \
+      -no-cups \
+      -no-gif \
+      -no-ico \
+      -no-libjpeg \
+      -no-sqlite \
+      -no-opengl \
+      -no-evdev \
+      -no-harfbuzz \
+      -no-dbus  \
       -no-feature-regularexpression && \
       make && \
       make install && sync && \
