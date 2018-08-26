@@ -15,7 +15,7 @@ RUN apk update --no-cache -U && \
       linux-headers \
       make \
       patch && \
-    mkdir -p /opt && sync \
+    mkdir -p /opt && sync && \
     wget -q https://download.qt.io/archive/qt/5.11/5.11.1/submodules/qtbase-everywhere-src-5.11.1.zip && sync && \
     unzip qtbase-everywhere-src-5.11.1.zip > /dev/null 2>&1 && sync && \
     rm qtbase-everywhere-src-5.11.1.zip && sync && \
