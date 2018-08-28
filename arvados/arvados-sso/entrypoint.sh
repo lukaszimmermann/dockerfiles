@@ -5,10 +5,7 @@ set -e
 ##############################################################################
 # Function for checking environment variables
 ##############################################################################
-check_variable() {
-
-if [ -z ${$1+x} ]; then
-
+print_error() {
 cat << EOF
     #############################################################################
     FATAL ERROR: Variable $1 is unset. This is not supported.
@@ -16,7 +13,6 @@ cat << EOF
     #############################################################################
 EOF
      exit "$2"
-fi
 }
 
 
@@ -24,14 +20,19 @@ fi
 # Check the existence of certain environment variables
 ##############################################################################
 # ARV_UUID_PREFIX
-check_variable 'ARV_UUID_PREFIX' 1
+[ ! -z ${ARV_UUID_PREFIX+x} ] || print_error 'ARV_UUID_PREFIX' 1
 
 # PG_HOST
-check_variable 'PG_HOST' 2 'The value should be something like postgres:5432'
+[ ! -z ${PG_HOST+x} ] || print_error 'PG_HOST' 2 'The value should be something like postgres:5432'
 
 # PG_PASSWORD
-check_variable 'PG_PASSWORD' 3 \
-  'The value is the password for the arvados_sso user'
+[ ! -z ${PG_PASSWORD+x} ] || print_error 'PG_PASSWORD' 3 'The value is the password for the arvados_sso user' 
+
+# SSO Client Name
+[ ! -z ${SSO_CLIENT_NAME+x} ] || print_error 'SSO_CLIENT_NAME' 4 'How the SSO client is registered in the database'
+
+# SSO App Secret
+[ ! -z ${SSO_APP_SECRET+x} ] || print_error 'SSO_APP_SECRET' 5 'The SSO Application secret'
 
 
 ##############################################################################
@@ -164,9 +165,22 @@ sync
 ##############################################################################
 dpkg-reconfigure arvados-sso-server
 
+##############################################################################
+# Create the Server Client for SSO
+#############################################################################
+cd /var/www/arvados-sso/current
+sudo -u www-data RAILS_ENV=production SSO_CLIENT_NAME="${SSO_CLIENT_NAME}" SSO_APP_SECRET="${SSO_APP_SECRET}" bundle exec rails runner /tmp/create_client.rb
 
 ##############################################################################
 # Cleanup
 ##############################################################################
 unset ARV_UUID_PREFIX
 unset ARV_SECRET_TOKEN
+unset SSO_CLIENT_NAME
+unset SSO_APP_SECRET
+
+##############################################################################
+# Start the nginx server
+##############################################################################
+exec nginx -g 'daemon off'
+

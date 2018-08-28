@@ -1,10 +1,11 @@
 FROM lukaszimmermann/arvados-parent:latest
 LABEL maintainer="luk.zim91@gmail.com"
 
-COPY entrypoint.sh /opt/entrypoint.sh
-RUN  chmod +x /opt/entrypoint.sh && \
-     apt-get update -y && \
+COPY create_client.rb /tmp/create_client.rb
+COPY nginx.conf /etc/nginx/nginx.conf
+RUN  apt-get update -y && \
      apt-get install -y --no-install-recommends --no-install-suggests \
+       sudo \
        make && \
      apt-get install -y --no-install-recommends --no-install-suggests \
        gcc \
@@ -23,4 +24,8 @@ RUN  chmod +x /opt/entrypoint.sh && \
       apt-get clean -y && \
       apt-get autoclean -y && \
       rm -rf /tmp/* /var/tmp/*
+COPY entrypoint.sh /opt/entrypoint.sh
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
+# See the nginx.conf for the port
+EXPOSE 8900
+ 
