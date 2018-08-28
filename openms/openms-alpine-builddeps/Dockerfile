@@ -1,6 +1,8 @@
 FROM alpine:3.8
 LABEL maintainer="luk.zim91@gmail.com"
 
+# Here we download Qt to alpine in a version that is suitable for the
+# building OpenMS. Also, we install the latest contrib library
 WORKDIR /tmp
 RUN apk update --no-cache -U && \
     apk add --no-cache -U  \
@@ -9,14 +11,14 @@ RUN apk update --no-cache -U && \
       cmake \
       git \
       g++ \
-      libtool  \
+      libtool \
       linux-headers \
       make \
       patch && \
-    mkdir -p /opt && \
-    wget https://download.qt.io/archive/qt/5.11/5.11.1/submodules/qtbase-everywhere-src-5.11.1.zip && \
-    unzip qtbase-everywhere-src-5.11.1.zip > /dev/null 2>&1  && \
-    rm qtbase-everywhere-src-5.11.1.zip && \
+    mkdir -p /opt && sync && \
+    wget -q https://download.qt.io/archive/qt/5.11/5.11.1/submodules/qtbase-everywhere-src-5.11.1.zip && sync && \
+    unzip qtbase-everywhere-src-5.11.1.zip > /dev/null 2>&1 && sync && \
+    rm qtbase-everywhere-src-5.11.1.zip && sync && \
     find /tmp/qtbase-everywhere-src-5.11.1 -type f -exec dos2unix {} \; && sync && \
     chmod -R ugoa-w /tmp/qtbase-everywhere-src-5.11.1 && \
     mkdir -p /tmp/configure && \
@@ -31,21 +33,21 @@ RUN apk update --no-cache -U && \
       -strip \
       -nomake tools \
       -nomake examples \
-	    -nomake tests \
-	    -no-widgets \
-	    -no-gtk \
-	    -no-cups \
-	    -no-gif \
-	    -no-ico \
-	    -no-libjpeg \
-	    -no-sqlite \
-	    -no-opengl \
-	    -no-evdev \
-	    -no-harfbuzz \
-	    -no-dbus  \
+      -nomake tests \
+      -no-widgets \
+      -no-gtk \
+      -no-cups \
+      -no-gif \
+      -no-ico \
+      -no-libjpeg \
+      -no-sqlite \
+      -no-opengl \
+      -no-evdev \
+      -no-harfbuzz \
+      -no-dbus  \
       -no-feature-regularexpression && \
-      make && \
-      make install && sync && \
+      make --quiet && sync && \
+      make --quiet install && sync && \
     cd /tmp && \
     rm -rf /tmp/qtbase-everywhere-src-5.11.1 && \
     git clone https://github.com/OpenMS/contrib.git && \
@@ -67,3 +69,4 @@ RUN apk update --no-cache -U && \
        lib/*.so* \
        /tmp/* \
        /var/tmp/* && sync
+
