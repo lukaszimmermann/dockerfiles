@@ -9,6 +9,7 @@ RUN apt-get update -y && \
       libssl-dev \
       libxml2-dev && \
     Rscript -e 'install.packages(c("devtools", "roxygen2", "RcppArmadillo"), dependencies=TRUE, clean=TRUE); update.packages(ask=FALSE, checkBuilt=TRUE);' && \
-    rm -rf /tmp/* /var/tmp/*
+    apt-get clean -y && \
+    rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* && sync
 WORKDIR /
 
