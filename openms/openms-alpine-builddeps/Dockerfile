@@ -15,21 +15,12 @@ RUN apk update --no-cache -U && \
       linux-headers \
       make \
       patch && \
-<<<<<<< Updated upstream:openms/openms-alpine-builddeps/Dockerfile
-    mkdir -p /opt && sync && \
-    wget -q https://download.qt.io/archive/qt/5.11/5.11.1/submodules/qtbase-everywhere-src-5.11.1.zip && sync && \
-    unzip qtbase-everywhere-src-5.11.1.zip > /dev/null 2>&1 && sync && \
-    rm qtbase-everywhere-src-5.11.1.zip && sync && \
-    find /tmp/qtbase-everywhere-src-5.11.1 -type f -exec dos2unix {} \; && sync && \
-    chmod -R ugoa-w /tmp/qtbase-everywhere-src-5.11.1 && \
-=======
     mkdir -p /opt && \
     wget -q https://download.qt.io/archive/qt/5.11/5.11.2/submodules/qtbase-everywhere-src-5.11.2.zip && \
     unzip qtbase-everywhere-src-5.11.2.zip > /dev/null 2>&1  && \
     rm qtbase-everywhere-src-5.11.2.zip && \
     find /tmp/qtbase-everywhere-src-5.11.2 -type f -exec dos2unix {} \; && sync && \
     chmod -R ugoa-w /tmp/qtbase-everywhere-src-5.11.2 && \
->>>>>>> Stashed changes:openms-alpine-builddeps/Dockerfile
     mkdir -p /tmp/configure && \
     cd /tmp/configure && \
     /tmp/qtbase-everywhere-src-5.11.2/configure \
