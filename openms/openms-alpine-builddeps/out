@@ -1,0 +1,528 @@
+docker build --no-cache --rm --pull -t openms-alpine-builddeps:latest .
+Sending build context to Docker daemon  6.144kB
+Step 1/4 : FROM alpine:3.8
+3.8: Pulling from library/alpine
+Digest: sha256:621c2f39f8133acb8e64023a94dbdf0d5ca81896102b9e57c0dc184cadaf5528
+Status: Image is up to date for alpine:3.8
+ ---> 196d12cf6ab1
+Step 2/4 : LABEL maintainer="luk.zim91@gmail.com"
+ ---> Running in 51c37956758a
+Removing intermediate container 51c37956758a
+ ---> d29598319fc7
+Step 3/4 : WORKDIR /tmp
+ ---> Running in 8ce568e29ff0
+Removing intermediate container 8ce568e29ff0
+ ---> b4182174d2a0
+Step 4/4 : RUN apk update --no-cache -U &&     apk add --no-cache -U        autoconf       automake       cmake       git       g++       libtool       linux-headers       make       patch &&     mkdir -p /opt &&     wget -q https://download.qt.io/archive/qt/5.11/5.11.2/submodules/qtbase-everywhere-src-5.11.2.zip &&     unzip qtbase-everywhere-src-5.11.2.zip > /dev/null 2>&1  &&     rm qtbase-everywhere-src-5.11.2.zip &&     find /tmp/qtbase-everywhere-src-5.11.2 -type f -exec dos2unix {} \; && sync &&     chmod -R ugoa-w /tmp/qtbase-everywhere-src-5.11.2 &&     mkdir -p /tmp/configure &&     cd /tmp/configure &&     /tmp/qtbase-everywhere-src-5.11.2/configure       -prefix /opt/qtbase-everywhere-src-5.11.2-build       -opensource       -confirm-license       -release       -recheck-all       -static       -strip       -nomake tools       -nomake examples       -nomake tests       -no-widgets       -no-gtk       -no-cups       -no-gif       -no-ico       -no-libjpeg       -no-sqlite       -no-opengl       -no-evdev       -no-harfbuzz       -no-dbus        -no-feature-regularexpression &&       make --quiet && sync &&       make --quiet install && sync &&     cd /tmp &&     rm -rf /tmp/qtbase-everywhere-src-5.11.2 &&     git clone https://github.com/OpenMS/contrib.git &&     mkdir -p /opt/contrib-build &&     cd /opt/contrib-build &&      cmake -DBUILD_TYPE=ALL /tmp/contrib &&     sed -i 's/PAGESIZE/page_size/g' /opt/contrib-build/include/seqan/file/string_external.h &&     sed -i 's/PAGESIZE/page_size/g' /opt/contrib-build/include/seqan/file/file_page.h &&     rm -rf CMakeCache.txt        CMakeFiles        Makefile        contrib.txt        archives        bin        README_contrib.txt        cmake_install.cmake        contrib_build.log        src         lib/*.so*        /tmp/*        /var/tmp/* && sync
+ ---> Running in 56c4f94b89de
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.8/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.8/community/x86_64/APKINDEX.tar.gz
+v3.8.1-35-ga062ffc9e8 [http://dl-cdn.alpinelinux.org/alpine/v3.8/main]
+v3.8.1-35-ga062ffc9e8 [http://dl-cdn.alpinelinux.org/alpine/v3.8/community]
+OK: 9539 distinct packages available
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.8/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.8/community/x86_64/APKINDEX.tar.gz
+(1/45) Installing m4 (1.4.18-r1)
+(2/45) Installing libbz2 (1.0.6-r6)
+(3/45) Installing perl (5.26.2-r1)
+(4/45) Installing autoconf (2.69-r2)
+(5/45) Installing automake (1.16.1-r0)
+(6/45) Installing libattr (2.4.47-r7)
+(7/45) Installing libacl (2.2.52-r5)
+(8/45) Installing expat (2.2.5-r0)
+(9/45) Installing lz4-libs (1.8.2-r0)
+(10/45) Installing xz-libs (5.2.4-r0)
+(11/45) Installing libarchive (3.3.2-r3)
+(12/45) Installing ca-certificates (20171114-r3)
+(13/45) Installing nghttp2-libs (1.32.0-r0)
+(14/45) Installing libssh2 (1.8.0-r3)
+(15/45) Installing libcurl (7.61.1-r0)
+(16/45) Installing ncurses-terminfo-base (6.1_p20180818-r1)
+(17/45) Installing ncurses-terminfo (6.1_p20180818-r1)
+(18/45) Installing ncurses-libs (6.1_p20180818-r1)
+(19/45) Installing libgcc (6.4.0-r9)
+(20/45) Installing rhash-libs (1.3.6-r1)
+(21/45) Installing libstdc++ (6.4.0-r9)
+(22/45) Installing libuv (1.20.2-r0)
+(23/45) Installing cmake (3.11.1-r2)
+(24/45) Installing binutils (2.30-r5)
+(25/45) Installing gmp (6.1.2-r1)
+(26/45) Installing isl (0.18-r0)
+(27/45) Installing libgomp (6.4.0-r9)
+(28/45) Installing libatomic (6.4.0-r9)
+(29/45) Installing pkgconf (1.5.3-r0)
+(30/45) Installing mpfr3 (3.1.5-r1)
+(31/45) Installing mpc1 (1.0.3-r1)
+(32/45) Installing gcc (6.4.0-r9)
+(33/45) Installing musl-dev (1.1.19-r10)
+(34/45) Installing libc-dev (0.7.1-r0)
+(35/45) Installing g++ (6.4.0-r9)
+(36/45) Installing pcre2 (10.31-r0)
+(37/45) Installing git (2.18.0-r0)
+(38/45) Installing readline (7.0.003-r0)
+(39/45) Installing bash (4.4.19-r1)
+Executing bash-4.4.19-r1.post-install
+(40/45) Installing cmake-bash-completion (3.11.1-r2)
+(41/45) Installing libltdl (2.4.6-r5)
+(42/45) Installing libtool (2.4.6-r5)
+(43/45) Installing linux-headers (4.4.6-r2)
+(44/45) Installing make (4.2.1-r2)
+(45/45) Installing patch (2.7.6-r2)
+Executing busybox-1.28.4-r1.trigger
+Executing ca-certificates-20171114-r3.trigger
+OK: 260 MiB in 58 packages
+Preparing build tree...
+Creating qmake...
+Done.
+Info: creating cache file /tmp/configure/.qmake.cache
+Info: creating stash file /tmp/configure/.qmake.stash
+[91m
+This is the Qt Open Source Edition.
+
+You have already accepted the terms of the Open Source license.
+[0m[91m
+Running configuration tests...
+[0m[91mChecking for gold linker... [0m[91mno
+[0m[91mChecking for machine tuple... [0m[91myes
+[0m[91mChecking for valid makespec... [0m[91myes
+[0m[91mChecking for target architecture... [0m[91mx86_64
+[0m[91mChecking for SSE2 instructions... [0m[91myes
+[0m[91mChecking for AES new instructions... [0m[91myes
+[0m[91mChecking for alloca() in alloca.h... [0m[91myes
+[0m[91mChecking for SSE3 instructions... [0m[91myes
+[0m[91mChecking for SSSE3 instructions... [0m[91myes
+[0m[91mChecking for SSE4.1 instructions... [0m[91myes
+[0m[91mChecking for SSE4.2 instructions... [0m[91myes
+[0m[91mChecking for AVX instructions... [0m[91myes
+[0m[91mChecking for AVX2 instructions... [0m[91myes
+[0m[91mChecking for AVX512 F instructions... [0m[91myes
+[0m[91mChecking for AVX512 BW instructions... [0m[91myes
+[0m[91mChecking for AVX512 CD instructions... [0m[91myes
+[0m[91mChecking for AVX512 DQ instructions... [0m[91myes
+[0m[91mChecking for AVX512 ER instructions... [0m[91myes
+[0m[91mChecking for AVX512 IFMA instructions... [0m[91myes
+[0m[91mChecking for AVX512 PF instructions... [0m[91myes
+[0m[91mChecking for AVX512 VBMI instructions... [0m[91myes
+[0m[91mChecking for AVX512 VL instructions... [0m[91myes
+[0m[91mChecking for C++14 support... [0m[91myes
+Checking for C++1z support... [0m[91mno
+[0m[91mChecking for new dtags support... [0m[91myes
+[0m[91mChecking for F16C instructions... [0m[91myes
+[0m[91mChecking for pkg-config... [0m[91myes
+[0m[91mChecking for D-Bus >= 1.2 (host)... [0m[91myes
+[0m[91mChecking for udev... [0m[91mno
+[0m[91mChecking for POSIX fallocate()... [0m[91myes
+[0m[91mChecking for precompiled header support... [0m[91myes
+[0m[91mChecking for RDRAND instruction... [0m[91myes
+[0m[91mChecking for symbol visibility support... [0m[91myes
+Checking for -Bsymbolic-functions support... [0m[91myes
+[0m[91mChecking for SHA new instructions... [0m[91myes
+[0m[91mChecking for STL compatibility... [0m[91myes
+[0m[91mChecking for zlib... [0m[91mno
+[0m[91mChecking for Intrinsics without -mXXX argument... [0m[91myes
+[0m[91mChecking for clock_gettime()... [0m[91myes
+[0m[91mChecking for POSIX monotonic clock... [0m[91myes
+[0m[91mChecking for C++11 <future>... [0m[91myes
+[0m[91mChecking for dlopen()... [0m[91myes
+[0m[91mChecking for eventfd... [0m[91myes
+[0m[91mChecking for futimens()... [0m[91myes
+[0m[91mChecking for getauxval()... [0m[91myes
+[0m[91mChecking for getentropy()... [0m[91mno
+[0m[91mChecking for GLib... [0m[91mno
+[0m[91mChecking for POSIX iconv... [0m[91myes
+[0m[91mChecking for ICU... [0m[91mno
+[0m[91mChecking for inotify... [0m[91myes
+[0m[91mChecking for SysV IPC... [0m[91myes
+[0m[91mChecking for linkat()... [0m[91myes
+[0m[91mChecking for ppoll()... [0m[91myes
+[0m[91mChecking for renameat2()... [0m[91mno
+[0m[91mChecking for slog2... [0m[91mno
+[0m[91mChecking for statx() in libc... [0m[91mno
+[0m[91mChecking for 64 bit atomics... [0m[91myes
+[0m[91mChecking for DoubleConversion... [0m[91mno
+[0m[91mChecking for PCRE2... [0m[91mno
+[0m[91mChecking for O_CLOEXEC... [0m[91myes
+[0m[91mChecking for C++11 <random>... [0m[91myes
+Checking for working std::atomic for function pointers... [0m[91myes
+[0m[91mChecking for getifaddrs()... [0m[91myes
+[0m[91mChecking for IPv6 ifname... [0m[91myes
+[0m[91mChecking for Linux AF_NETLINK sockets... [0m[91myes
+[0m[91mChecking for OpenSSL Headers... [0m[91mno
+[0m[91mChecking for XCB >= 1.5 (core)... [0m[91mno
+[0m[91mChecking for OpenVG... [0m[91mno
+[0m[91mChecking for FreeType... [0m[91mno
+[0m[91mChecking for GBM... [0m[91mno
+[0m[91mChecking for KMS... [0m[91mno
+[0m[91mChecking for LinuxFB... [0m[91myes
+[0m[91mChecking for mtdev... [0m[91mno
+[0m[91mChecking for default QPA platform... [0m[91mxcb
+[0m[91mChecking for tslib... [0m[91mno
+[0m[91mChecking for Vulkan... [0m[91mno
+[0m[91mChecking for xkbcommon... [0m[91mno
+[0m[91mChecking for XLib... [0m[91mno
+[0m[91mChecking for DB2 (IBM)... [0m[91mno
+[0m[91mChecking for InterBase... [0m[91mno
+[0m[91mChecking for MySQL... [0m[91mno
+[0m[91mChecking for OCI (Oracle)... [0m[91mno
+[0m[91mChecking for ODBC... [0m[91mno
+Checking for PostgreSQL... [0m[91mno
+[0m[91mChecking for SQLite (version 2)... [0m[91mno
+[0m[91mChecking for TDS (Sybase)... [0m[91mno
+[0m[91mDone running configuration tests.
+[0m[91m
+[0m[91mConfigure summary:
+[0m[91m
+[0m[91mBuild type: linux-g++ (x86_64, CPU features: mmx sse sse2)
+Configuration: sse2 aesni sse3 ssse3 sse4_1 sse4_2 avx avx2 avx512f avx512bw avx512cd avx512dq avx512er avx512ifma avx512pf avx512vbmi avx512vl compile_examples enable_new_dtags f16c largefile precompile_header rdrnd shani x86SimdAlways release c++11 c++14 concurrent reduce_exports reduce_relocations static stl no-widgets
+Build options:
+  Mode ................................... release
+  Optimize release build for size ........ no
+  Building shared libraries .............. no
+  Using C++ standard ..................... C++14
+  Using ccache ........................... no
+  Using gold linker ...................... no
+  Using new DTAGS ........................ yes
+  Using precompiled headers .............. yes
+  Using LTCG ............................. no
+  Target compiler supports:
+    SSE .................................. SSE2 SSE3 SSSE3 SSE4.1 SSE4.2
+    AVX .................................. AVX AVX2
+    AVX512 ............................... F ER CD PF DQ BW VL IFMA VBMI
+    Other x86 ............................ AES F16C RDRAND SHA
+    Intrinsics without -mXXX option ...... yes
+  Build parts ............................ libs
+Qt modules and options:
+  Qt Concurrent .......................... yes
+  Qt D-Bus ............................... no
+  Qt D-Bus directly linked to libdbus .... no
+  Qt Gui ................................. yes
+  Qt Network ............................. yes
+  Qt Sql ................................. yes
+  Qt Testlib ............................. yes
+  Qt Widgets ............................. no
+  Qt Xml ................................. yes
+Support enabled for:
+  Using pkg-config ....................... yes
+  udev ................................... no
+  Using system zlib ...................... no
+Qt Core:
+  DoubleConversion ....................... yes
+    Using system DoubleConversion ........ no
+  GLib ................................... no
+  iconv .................................. yes
+  ICU .................................... no
+  Tracing backend ........................ <none>
+  Logging backends:
+    journald ............................. no
+    syslog ............................... no
+    slog2 ................................ no
+  Using system PCRE2 ..................... no
+Qt Network:
+  getifaddrs() ........................... yes
+  IPv6 ifname ............................ yes
+  libproxy ............................... no
+  Linux AF_NETLINK ....................... yes
+  OpenSSL ................................ no
+    Qt directly linked to OpenSSL ........ no
+  OpenSSL 1.1 ............................ no
+  SCTP ................................... no
+  Use system proxies ..................... yes
+Qt Gui:
+  Accessibility .......................... yes
+  FreeType ............................... yes
+    Using system FreeType ................ no
+  HarfBuzz ............................... no
+    Using system HarfBuzz ................ no
+  Fontconfig ............................. no
+  Image formats:
+    GIF .................................. no
+    ICO .................................. no
+    JPEG ................................. no
+      Using system libjpeg ............... no
+    PNG .................................. yes
+      Using system libpng ................ no
+  EGL .................................... no
+  OpenVG ................................. no
+  OpenGL:
+    Desktop OpenGL ....................... no
+    OpenGL ES 2.0 ........................ no
+    OpenGL ES 3.0 ........................ no
+    OpenGL ES 3.1 ........................ no
+    OpenGL ES 3.2 ........................ no
+  Vulkan ................................. no
+  Session Management ..................... yes
+Features used by QPA backends:
+  evdev .................................. no
+  libinput ............................... no
+  INTEGRITY HID .......................... no
+  mtdev .................................. no
+  tslib .................................. no
+  xkbcommon-evdev ........................ no
+QPA backends:
+  DirectFB ............................... no
+  EGLFS .................................. no
+  LinuxFB ................................ no
+  VNC .................................... no
+  Mir client ............................. no
+Qt Widgets:
+  GTK+ ................................... no
+  Styles ................................. Fusion Windows
+Qt PrintSupport:
+  CUPS ................................... no
+Qt Sql:
+  DB2 (IBM) .............................. no
+  InterBase .............................. no
+  MySql .................................. no
+  OCI (Oracle) ........................... no
+  ODBC ................................... no
+  PostgreSQL ............................. no
+  SQLite2 ................................ no
+  SQLite ................................. yes
+    Using system provided SQLite ......... no
+  TDS (Sybase) ........................... no
+Qt Testlib:
+  Tester for item models ................. yes
+
+Note: Also available for Linux: linux-clang linux-icc
+
+Note: Using static linking will disable the use of dynamically
+loaded plugins. Make sure to import all needed static plugins,
+or compile needed modules into the library.
+
+WARNING: No QPA platform plugin enabled! This will
+produce a Qt that cannot run GUI applications.
+The dependencies needed for xcb to build are listed in
+src/plugins/platforms/xcb/README
+[0m[91m
+[0m[91mQt is now configured for building. Just run 'make'.
+[0m[91mOnce everything is built, you must run 'make install'.
+[0m[91mQt will be installed into '/opt/qtbase-everywhere-src-5.11.2-build'.
+[0m[91m
+[0m[91mPrior to reconfiguration, make sure you remove any leftovers from
+[0m[91mthe previous build.
+[0m[91m
+[0m[91m/tmp/qtbase-everywhere-src-5.11.2/src/corelib/io/qfilesystemengine_unix.cpp:115:12: warning: 'int statx(int, const char*, int, unsigned int, statx*)' defined but not used [-Wunused-function]
+ static int statx(int dirfd, const char *pathname, int flag, unsigned mask, struct statx *statxbuf)
+            ^~~~~
+[0m[91mIn file included from /tmp/qtbase-everywhere-src-5.11.2/include/QtCore/qstring.h:1:0,
+                 from /tmp/qtbase-everywhere-src-5.11.2/include/QtCore/../../src/corelib/kernel/qcoreapplication.h:44,
+                 from /tmp/qtbase-everywhere-src-5.11.2/include/QtCore/qcoreapplication.h:1,
+                 from /tmp/qtbase-everywhere-src-5.11.2/src/corelib/global/qt_pch.h:62:
+/tmp/qtbase-everywhere-src-5.11.2/include/QtCore/../../src/corelib/tools/qstring.h: In member function 'bool QUrlPrivate::setHost(const QString&, int, int, QUrl::ParsingMode)':
+/tmp/qtbase-everywhere-src-5.11.2/include/QtCore/../../src/corelib/tools/qstring.h:1048:7: warning: assuming signed overflow does not occur when assuming that (X - c) > X is always false [-Wstrict-overflow]
+     { if (i >= s.d->size) s.resize(i + 1, QLatin1Char(' ')); else s.detach();
+       ^~
+[0m[91m/tmp/qtbase-everywhere-src-5.11.2/src/corelib/io/qfilesystemengine_unix.cpp:115:12: warning: 'int statx(int, const char*, int, unsigned int, statx*)' defined but not used [-Wunused-function]
+ static int statx(int dirfd, const char *pathname, int flag, unsigned mask, struct statx *statxbuf)
+            ^~~~~
+[0m[91mIn file included from /tmp/qtbase-everywhere-src-5.11.2/src/corelib/io/forkfd_qt.cpp:74:0:
+/tmp/qtbase-everywhere-src-5.11.2/src/corelib/io/../../3rdparty/forkfd/forkfd.c: In function 'int forkfd(int, pid_t*)':
+/tmp/qtbase-everywhere-src-5.11.2/src/corelib/io/../../3rdparty/forkfd/forkfd.c:661:9: warning: unused variable 'efd' [-Wunused-variable]
+     int efd;
+         ^~~
+[0m[91m/tmp/qtbase-everywhere-src-5.11.2/src/network/access/qnetworkaccessdebugpipebackend_p.h:0: Note: No relevant classes found. No output generated.
+[0m[91mIn file included from /tmp/qtbase-everywhere-src-5.11.2/include/QtCore/qstring.h:1:0,
+                 from /tmp/qtbase-everywhere-src-5.11.2/include/QtCore/../../src/corelib/kernel/qcoreapplication.h:44,
+                 from /tmp/qtbase-everywhere-src-5.11.2/include/QtCore/qcoreapplication.h:1,
+                 from /tmp/qtbase-everywhere-src-5.11.2/src/corelib/global/qt_pch.h:62:
+/tmp/qtbase-everywhere-src-5.11.2/include/QtCore/../../src/corelib/tools/qstring.h: In member function 'virtual QString QSqlDriver::sqlStatement(QSqlDriver::StatementType, const QString&, const QSqlRecord&, bool) const':
+/tmp/qtbase-everywhere-src-5.11.2/include/QtCore/../../src/corelib/tools/qstring.h:1048:7: warning: assuming signed overflow does not occur when assuming that (X - c) > X is always false [-Wstrict-overflow]
+     { if (i >= s.d->size) s.resize(i + 1, QLatin1Char(' ')); else s.detach();
+       ^~
+[0m[91m/tmp/qtbase-everywhere-src-5.11.2/src/gui/painting/qplatformbackingstore.h:0: Note: No relevant classes found. No output generated.
+[0mInfo: creating stash file /tmp/configure/src/plugins/sqldrivers/.qmake.stash
+[91m/tmp/qtbase-everywhere-src-5.11.2/src/plugins/platforms/offscreen/qoffscreencommon.cpp: In member function 'virtual void QOffscreenCursor::setPos(const QPoint&)':
+/tmp/qtbase-everywhere-src-5.11.2/src/plugins/platforms/offscreen/qoffscreencommon.cpp:80:143: warning: 'static void QWindowSystemInterface::handleMouseEvent(QWindow*, const QPointF&, const QPointF&, Qt::MouseButtons, Qt::KeyboardModifiers, Qt::MouseEventSource) [with Delivery = QWindowSystemInterface::DefaultDelivery; Qt::MouseButtons = QFlags<Qt::MouseButton>; Qt::KeyboardModifiers = QFlags<Qt::KeyboardModifier>]' is deprecated [-Wdeprecated-declarations]
+         QWindowSystemInterface::handleMouseEvent(containing, local, pos, QGuiApplication::mouseButtons(), QGuiApplication::keyboardModifiers());
+                                                                                                                                               ^
+In file included from /tmp/qtbase-everywhere-src-5.11.2/include/QtGui/5.11.2/QtGui/qpa/qwindowsysteminterface.h:1:0,
+                 from /tmp/qtbase-everywhere-src-5.11.2/include/QtGui/5.11.2/QtGui/private/../../../../../src/gui/kernel/qguiapplication_p.h:62,
+                 from /tmp/qtbase-everywhere-src-5.11.2/include/QtGui/5.11.2/QtGui/private/qguiapplication_p.h:1,
+                 from /tmp/qtbase-everywhere-src-5.11.2/src/plugins/platforms/offscreen/qoffscreencommon.cpp:44:
+/tmp/qtbase-everywhere-src-5.11.2/include/QtGui/5.11.2/QtGui/qpa/../../../../../src/gui/kernel/qwindowsysteminterface.h:81:31: note: declared here
+     QT_DEPRECATED static void handleMouseEvent(QWindow *window, const QPointF &local, const QPointF &global, Qt::MouseButtons b,
+                               ^~~~~~~~~~~~~~~~
+[0m[91mstrip:/opt/qtbase-everywhere-src-5.11.2-build/bin/fixqt4headers.pl: File format not recognized
+[0m[91mstrip:/opt/qtbase-everywhere-src-5.11.2-build/bin/syncqt.pl: File format not recognized
+[0m[91mCloning into 'contrib'...
+[0m-- The C compiler identification is GNU 6.4.0
+-- The CXX compiler identification is GNU 6.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- ADDRESSMODEL is: 64-bit
+-- BUILD_TYPE: ALL (one of: ALL;SEQAN;LIBSVM;XERCESC;BOOST;COINOR;BZIP2;ZLIB;GLPK;EIGEN;WILDMAGIC;SQLITE;KISSFFT)
+-- FORCE_REBUILD: OFF
+-- NUMBER_OF_JOBS: 2 (maximal number of concurrent compile jobs)
+-- Downloading SEQAN .. Try #1
+-- Downloading SEQAN .. done
+-- Validating archive for SEQAN .. 
+-- Validating archive for SEQAN .. successful
+-- Extracting SEQAN .. 
+-- Extracting SEQAN .. done
+-- Generating seqan build system .. 
+-- Generating seqan build system .. done
+-- Installing seqan headers .. 
+-- Installing seqan headers .. done
+-- Downloading LIBSVM .. Try #1
+-- Downloading LIBSVM .. done
+-- Validating archive for LIBSVM .. 
+-- Validating archive for LIBSVM .. successful
+-- Extracting LIBSVM .. 
+-- Extracting LIBSVM .. done
+-- Generating libsvm build system .. 
+-- Generating libsvm build system .. done
+-- Building libsvm lib (Release) .. 
+-- Building libsvm lib (Release) .. done
+-- Downloading XERCES .. Try #1
+-- Downloading XERCES .. done
+-- Validating archive for XERCES .. 
+-- Validating archive for XERCES .. successful
+-- Extracting XERCES .. 
+-- Extracting XERCES .. done
+-- Try patching /opt/contrib-build/src/Xerces-C_3_2_0/src/CMakeLists.txt with binary option ... 
+-- Patching /opt/contrib-build/src/Xerces-C_3_2_0/src/CMakeLists.txt ... done
+-- Reconfiguring XERCES-C cmake build system for Release...
+-- Building and installing XERCES-C for Release...
+-- Downloading BZIP2 .. Try #1
+-- Downloading BZIP2 .. done
+-- Validating archive for BZIP2 .. 
+-- Validating archive for BZIP2 .. successful
+-- Extracting bzip2 .. 
+-- Extracting bzip2 .. done
+-- Generating bzip2 build system .. 
+-- Generating bzip2 build system .. done
+-- Building bzip2 lib (Release) .. 
+-- Building bzip2 lib (Release) .. done
+-- Downloading ZLIB .. Try #1
+-- Downloading ZLIB .. done
+-- Validating archive for ZLIB .. 
+-- Validating archive for ZLIB .. successful
+-- Extracting ZLIB .. 
+-- Extracting ZLIB .. done
+-- Generating zlib build system .. 
+-- Building zlib lib (Release) .. 
+-- Building zlib lib (Release) .. done
+-- Downloading BOOST .. Try #1
+-- Downloading BOOST .. done
+-- Validating archive for BOOST .. 
+-- Validating archive for BOOST .. successful
+-- Extracting BOOST .. 
+-- Extracting BOOST .. done
+-- Bootstrapping Boost libraries (./bootstrap.sh --prefix=/opt/contrib-build --with-toolset=gcc --with-libraries=date_time,iostreams,math,regex,system,thread) ...
+-- Bootstrapping Boost libraries (./bootstrap.sh --prefix=/opt/contrib-build --with-libraries=iostreams,math,date_time,regex,system,thread) ... done
+-- Installing Boost libraries (./bjam toolset=gcc -j 2 --disable-icu -sZLIB_SOURCE=/opt/contrib-build/src/zlib-1.2.11 -sBZIP2_SOURCE=/opt/contrib-build/src/bzip2-1.0.5  link=static cxxflags='-fPIC '  install --build-type=complete --layout=tagged --threading=single,multi) ...
+-- Installing Boost libraries (./bjam toolset=gcc -j 2 --disable-icu -sZLIB_SOURCE=/opt/contrib-build/src/zlib-1.2.11 -sBZIP2_SOURCE=/opt/contrib-build/src/bzip2-1.0.5  link=static cxxflags='-fPIC '  install --build-type=complete --layout=tagged --threading=single,multi) ... done
+-- Downloading GLPK .. Try #1
+-- Downloading GLPK .. done
+-- Validating archive for GLPK .. 
+-- Validating archive for GLPK .. successful
+-- Extracting GLPK .. 
+-- Extracting GLPK .. done
+-- Configuring GLPK (./configure --disable-dependency-tracking --prefix /opt/contrib-build --disable-shared CPPFLAGS='-Wall -O3 -fPIC' CXX=/usr/bin/c++ CC=/usr/bin/cc .. 
+-- Configuring GLPK .. done
+-- Building GLPK library (make).. 
+-- Building GLPK library (make) .. done
+-- Installing GLPK library (make install) .. 
+-- Installing GLPK library (make install) .. done
+-- Downloading COINOR .. Try #1
+-- Downloading COINOR .. done
+-- Validating archive for COINOR .. 
+-- Validating archive for COINOR .. successful
+-- Extracting COINOR .. 
+-- Extracting COINOR .. done
+-- Try patching /opt/contrib-build/src/CoinMP-1.8.3/CoinUtils/configure with binary option ... 
+-- Patching /opt/contrib-build/src/CoinMP-1.8.3/CoinUtils/configure ... done
+-- Try patching /opt/contrib-build/src/CoinMP-1.8.3/Clp/configure with binary option ... 
+-- Patching /opt/contrib-build/src/CoinMP-1.8.3/Clp/configure ... done
+-- Try patching /opt/contrib-build/src/CoinMP-1.8.3/Cgl/configure with binary option ... 
+-- Patching /opt/contrib-build/src/CoinMP-1.8.3/Cgl/configure ... done
+-- Try patching /opt/contrib-build/src/CoinMP-1.8.3/CoinMP/configure with binary option ... 
+-- Patching /opt/contrib-build/src/CoinMP-1.8.3/CoinMP/configure ... done
+-- Try patching /opt/contrib-build/src/CoinMP-1.8.3/Cbc/configure with binary option ... 
+-- Patching /opt/contrib-build/src/CoinMP-1.8.3/Cbc/configure ... done
+-- Try patching /opt/contrib-build/src/CoinMP-1.8.3/Osi/configure with binary option ... 
+-- Patching /opt/contrib-build/src/CoinMP-1.8.3/Osi/configure ... done
+-- Configure COIN-OR library (./configure -C --prefix=/opt/contrib-build --enable-static=yes --enable-shared=no --with-lapack=no --with-blas=no ADD_CXXFLAGS='-fPIC' CXX=/usr/bin/c++ CC=/usr/bin/cc)
+-- Configure COIN-OR library (./configure -C --prefix=/opt/contrib-build --enable-static=yes --enable-shared=no --with-lapack=no --with-blas=no ADD_CXXFLAGS='-fPIC' CXX=/usr/bin/c++ CC=/usr/bin/cc) .. done
+-- Building and installing COIN-OR library (make install).. 
+-- Building and installing COIN-OR library (make install) .. done
+-- Downloading EIGEN .. Try #1
+-- Downloading EIGEN .. done
+-- Validating archive for EIGEN .. 
+-- Validating archive for EIGEN .. successful
+-- Extracting EIGEN .. 
+-- Extracting EIGEN .. done
+-- Try patching /opt/contrib-build/src/eigen-eigen-5a0156e40feb/CMakeLists.txt with binary option ... 
+-- Patching /opt/contrib-build/src/eigen-eigen-5a0156e40feb/CMakeLists.txt ... done
+-- Try patching /opt/contrib-build/src/eigen-eigen-5a0156e40feb/blas/CMakeLists.txt with binary option ... 
+-- Patching /opt/contrib-build/src/eigen-eigen-5a0156e40feb/blas/CMakeLists.txt ... done
+-- Try patching /opt/contrib-build/src/eigen-eigen-5a0156e40feb/unsupported/CMakeLists.txt with binary option ... 
+-- Patching /opt/contrib-build/src/eigen-eigen-5a0156e40feb/unsupported/CMakeLists.txt ... done
+-- Generating eigen build system .. 
+-- Generating eigen build system .. done
+-- Installing eigen headers .. 
+-- Installing eigen headers .. done
+-- Downloading WILDMAGIC .. Try #1
+-- Downloading WILDMAGIC .. done
+-- Validating archive for WILDMAGIC .. 
+-- Validating archive for WILDMAGIC .. successful
+-- Extracting WILDMAGIC .. 
+-- Extracting WILDMAGIC .. done
+-- Try patching /opt/contrib-build/src/WildMagic5/LibCore/Assert/Wm5Assert.h with binary option ... 
+-- Patching /opt/contrib-build/src/WildMagic5/LibCore/Assert/Wm5Assert.h ... done
+-- Try patching /opt/contrib-build/src/WildMagic5/LibCore/Assert/Wm5Assert.cpp with binary option ... 
+-- Patching /opt/contrib-build/src/WildMagic5/LibCore/Assert/Wm5Assert.cpp ... done
+-- Try patching /opt/contrib-build/src/WildMagic5/LibMathematics/Algebra/Wm5Vector2.inl with binary option ... 
+-- Patching /opt/contrib-build/src/WildMagic5/LibMathematics/Algebra/Wm5Vector2.inl ... done
+-- Try patching /opt/contrib-build/src/WildMagic5/LibCore/Wm5CoreLIB.h with binary option ... 
+-- Patching /opt/contrib-build/src/WildMagic5/LibCore/Wm5CoreLIB.h ... done
+-- Generating wildmagic build system .. 
+-- Generating wildmagic build system .. done
+-- Building wildmagic library (Release) .. 
+-- Building wildmagic library (Release) .. done
+-- Downloading KISSFFT .. Try #1
+-- Downloading KISSFFT .. done
+-- Validating archive for KISSFFT .. 
+-- Validating archive for KISSFFT .. successful
+-- Extracting kissfft .. 
+-- Extracting kissfft .. done
+-- Generating kissfft build system .. 
+-- Generating kissfft build system .. done
+-- Building kissfft lib (Release) .. 
+-- Building kissfft lib (Release) .. done
+-- Downloading SQLITE .. Try #1
+-- Downloading SQLITE .. done
+-- Validating archive for SQLITE .. 
+-- Validating archive for SQLITE .. successful
+-- Extracting SQLITE .. 
+-- Extracting SQLITE .. done
+-- Configure SQLITE library (./configure --prefix /opt/contrib-build --with-pic --disable-shared) .. 
+-- Configure SQLITE library (./configure --prefix /opt/contrib-build --with-pic --disable-shared) .. done
+-- Building SQLITE library (make) .. 
+-- Building SQLITE library (make) .. done
+-- Installing SQLITE library (make install) .. 
+-- Installing SQLITE library (make install) .. done
+-- 
+-- 
+--   The contrib package has been built!
+--   You can now configure and build OpenMS!
+-- 
+-- 
+-- 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /opt/contrib-build
+Removing intermediate container 56c4f94b89de
+ ---> 0c1e2ab8aa9c
+Successfully built 0c1e2ab8aa9c
+Successfully tagged openms-alpine-builddeps:latest
