@@ -1,0 +1,6 @@
+c_hlevel	c_fullname	c_name	c_visualattributes	c_basecode	c_facttablecolumn	c_tablename	c_columnname	c_columndatatype	c_operator	c_dimcode	secure_obj_token
+0	\Patient\	Patient	CA 					T	LIKE		PUBLIC
+1	\Patient\Birth date\	Birth date	LAD	birth_date	CONCEPT_CD	CONCEPT_DIMENSION	CONCEPT_PATH	T	LIKE	birth_date	PUBLIC
+0	\Ontology\	Ontology	CA 					T	LIKE		PUBLIC
+1	\Ontology\Decease X\	Decease X	LAC	ICD-10/Code-X	CONCEPT_CD	CONCEPT_DIMENSION	CONCEPT_PATH	T	LIKE	ICD-10/Code-X	PUBLIC
+1	\Ontology\Decease Y\	Decease Y	LAC	ICD-10/Code-Y	CONCEPT_CD	CONCEPT_DIMENSION	CONCEPT_PATH	T	LIKE	ICD-10/Code-Y	PUBLIC

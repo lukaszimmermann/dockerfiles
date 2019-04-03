@@ -1,0 +1,5 @@
+encounter_num	patient_num	concept_cd	provider_id	start_date	modifier_cd	instance_num	trial_visit_num	valtype_cd	tval_char	nval_num	observation_blob
+-1	0	birth_date	@		@	0	0	D		946684800.0	
+-1	1	birth_date	@		@	1	0	D		1039478400.0	
+-1	0	ICD-10/Code-X	@		@	2	0	T	Decease X		
+-1	1	ICD-10/Code-Y	@		@	3	0	T	Decease Y		
