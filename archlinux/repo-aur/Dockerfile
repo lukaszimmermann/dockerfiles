@@ -17,6 +17,7 @@ WORKDIR /tmp
 RUN pacman -Syyu --noconfirm \
       awk \
       binutils \
+      diffutils \
       fakeroot \
       file \
       gcc \
