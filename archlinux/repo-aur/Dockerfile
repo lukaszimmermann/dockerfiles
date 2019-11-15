@@ -59,6 +59,12 @@ RUN pacman -Syyu --noconfirm \
       zip \
       openssl \
       pixman \
+      libyaml \
+      lib32-glibc \
+      ruby \
+      gperf \
+      rubygems \
+      lib32-gcc-libs \
       jdk11-openjdk > /dev/null 2>&1 && \
     gpg --recv-keys 702353E0F7E48EDB > /dev/null 2>&1 && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
