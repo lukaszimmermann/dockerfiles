@@ -52,6 +52,9 @@ RUN pacman -Syyu --noconfirm \
       python2-setuptools \
       python2-appdirs \
       python2-six \
+      python \
+      python-six \
+      python-setuptools \
       r \
       zip \
       openssl \
