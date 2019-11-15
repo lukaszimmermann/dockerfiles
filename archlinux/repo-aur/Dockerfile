@@ -59,9 +59,9 @@ RUN pacman -Syyu --noconfirm \
       zip \
       openssl \
       pixman \
-      jdk11-openjdk && \
-    pacman-key --recv-keys 702353E0F7E48EDB && \
-    gpg --recv-keys 702353E0F7E48EDB && \
+      jdk11-openjdk > /dev/null 2>&1 && \
+    pacman-key --recv-keys 702353E0F7E48EDB > /dev/null 2>&1 && \
+    gpg --recv-keys 702353E0F7E48EDB > /dev/null 2>&1 && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
     echo "${BUILD_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     rm -rf /var/cache/pacman/pkg && sync
