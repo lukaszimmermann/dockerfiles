@@ -5,9 +5,10 @@ COPY packages /tmp/packages
 COPY copy_pkgs.sh /opt/copy_pkgs.sh
 COPY install_aur.sh /opt/install_aur.sh 
 
-ENV BUILD_USER pkg
+ENV BUILD_USER  pkg
 ENV BUILD_MOUNT "/opt/repository"
 ENV BUILD_REPO  "${BUILD_MOUNT}/files/aur/os/x86_64"
+ENV GOPATH      "/home/${BUILD_USER}/go"
 
 SHELL [ "/bin/bash", "-euo", "pipefail", "-c" ]
 
@@ -23,6 +24,7 @@ RUN pacman -Syyu --noconfirm \
       gcc \
       gettext \
       git \
+      gnupg \
       grep \
       go-pie \
       make \
@@ -55,6 +57,8 @@ RUN pacman -Syyu --noconfirm \
       openssl \
       pixman \
       jdk11-openjdk && \
+    pacman-key --recv-keys 702353E0F7E48EDB && \
+    gpg --recv-keys 702353E0F7E48EDB && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
     echo "${BUILD_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     rm -rf /var/cache/pacman/pkg && sync
@@ -83,4 +87,3 @@ WORKDIR /tmp
 RUN xargs pikaur -Sw --noconfirm < /tmp/packages_aur && sync
 
 ENTRYPOINT [ "copy_pkgs.sh", "/opt/repository/files/aur/os/x86_64" ]
-
