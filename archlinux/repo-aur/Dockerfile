@@ -61,7 +61,6 @@ RUN pacman -Syyu --noconfirm \
       pixman \
       jdk11-openjdk > /dev/null 2>&1 && \
     gpg --recv-keys 702353E0F7E48EDB > /dev/null 2>&1 && \
-    pacman-key --recv-keys 702353E0F7E48EDB > /dev/null 2>&1 && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
     echo "${BUILD_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     rm -rf /var/cache/pacman/pkg && sync
@@ -87,6 +86,7 @@ RUN \
 
 USER "${BUILD_USER}"
 WORKDIR /tmp
-RUN xargs pikaur -Sw --noconfirm < /tmp/packages_aur && sync
+RUN gpg --recv-keys 702353E0F7E48EDB && \
+    xargs pikaur -Sw --noconfirm < /tmp/packages_aur && sync
 
 ENTRYPOINT [ "copy_pkgs.sh", "/opt/repository/files/aur/os/x86_64" ]
