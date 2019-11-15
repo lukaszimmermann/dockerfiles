@@ -1,8 +1,8 @@
 FROM archlinux:latest
 LABEL maintainer="luk.zim91@gmail.com"
 
-COPY install_aur.sh /tmp/install_aur.sh
 COPY packages /tmp/packages
+COPY copy_pkgs.sh /opt/copy_pkgs.sh
 
 ENV BUILD_USER pkg
 ENV BUILD_MOUNT "/opt/repository"
@@ -43,19 +43,18 @@ RUN /tmp/install_aur.sh pikaur && sync
 USER root
 WORKDIR /tmp
 RUN \
-    # Expand provided package list to also contain dependencies of AUR packages
-    go run /tmp/expand_dependencies.go /tmp/packages | sort > /tmp/packages_sorted && \
-    rm /tmp/packages && \
     # Assemble list of all package names available in core, extra and community 
     pacman -Si | grep '^Name' | awk '{print $3}' | sort > /tmp/packages_all && \
     chmod 0444 /tmp/packages_all && \
     # Split packages into pacman and AUR packages
-    comm -23 /tmp/packages_sorted /tmp/packages_all > /tmp/packages_aur && \
-    rm /tmp/packages_all && \
+    comm -23 /tmp/packages /tmp/packages_all > /tmp/packages_aur && \
+    rm /tmp/packages_all /tmp/packages && \
     chmod 0444 /tmp/packages_aur && \
     mkdir -p "${BUILD_REPO}" && sync
 
 USER "${BUILD_USER}"
 WORKDIR /tmp
 RUN xargs pikaur -Sw --noconfirm < /tmp/packages_aur && sync
+
+ENTRYPOINT [ "copy_pkgs.sh", "/opt/repository/files/aur/os/x86_64" ]
 
