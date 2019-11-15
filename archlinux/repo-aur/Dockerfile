@@ -31,7 +31,30 @@ RUN pacman -Syyu --noconfirm \
       pyalpm \
       sudo \
       unzip \
-      which && \
+      which \
+      libxss \
+      gtk3 \
+      iso-codes \
+      avahi \
+      brotli \
+      polkit \
+      libgusb \
+      mesa \
+      pango \
+      dconf \
+      cairo \
+      fontconfig \
+      freetype2 \
+      python2 \
+      python2-pyparsing  \
+      python2-setuptools \
+      python2-appdirs \
+      python2-six \
+      r \
+      zip \
+      openssl \
+      pixman \
+      jdk11-openjdk && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
     echo "${BUILD_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     rm -rf /var/cache/pacman/pkg && sync
