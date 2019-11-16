@@ -80,7 +80,6 @@ RUN pacman -Syyu --noconfirm \
       c-ares \
       hunspell \
       libevent \
-      libvpc \
       mailcap \
       mozilla-common \
       startup-notification \
@@ -166,7 +165,6 @@ RUN pacman -Syyu --noconfirm \
       c-ares \
       hunspell \
       libevent \
-      libvpc \
       mailcap \
       mozilla-common \
       pikaur \
