@@ -320,7 +320,10 @@ sshfs
 startup-notification
 strace
 sudo
+swagger-codegen
+swagger-dsl
 swagger-editor-git
+swagger-ui
 swig3
 sysfsutils
 system-config-printer
