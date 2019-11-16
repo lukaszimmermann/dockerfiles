@@ -3,6 +3,7 @@ LABEL maintainer="luk.zim91@gmail.com"
 
 COPY packages packages_build /tmp/
 COPY copy_pkgs.sh install_aur.sh /opt/
+COPY mirrorlist /etc/pacman.d/mirrorlist
 
 ENV REPO "/opt/repository/files/aur/os/x86_64"
 ENV BUILD_USER pkg
