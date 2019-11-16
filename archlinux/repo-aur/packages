@@ -235,7 +235,6 @@ perl-libwww
 perl-lwp-protocol-https
 perl-term-readline-gnu
 perl-term-ui
-phantomjs
 pkgconf
 podman
 postgresql-libs
