@@ -22,7 +22,6 @@ freetype2
 gcc
 gettext
 git
-gnupg
 go-pie
 gperf
 grep
@@ -49,7 +48,6 @@ mozilla-common
 nodejs
 node-gyp
 npm
-openssl
 pango
 patch
 pixman

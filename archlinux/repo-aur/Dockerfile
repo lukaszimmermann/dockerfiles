@@ -28,8 +28,8 @@ RUN xargs pacman -Syyu --noconfirm < /tmp/packages_build && \
     chmod 0444 /opt/packages_aur && \
     su -c'gpg --recv-keys 702353E0F7E48EDB' "${BUILD_USER}" && \
     su -c'xargs pikaur -Sw --noconfirm < /opt/packages_aur' "${BUILD_USER}" && \
-    xargs pacman -Rns --noconfirm < /tmp/packages_build && \
     pacman -Rns --noconfirm pikaur && \
+    xargs pacman -Rns --noconfirm < /tmp/packages_build && \
     pacman -Sc --noconfirm  && \
     pacman -Scc --noconfirm && \
     rm -rf /tmp/* \
