@@ -36,5 +36,5 @@ RUN xargs pacman -Syyu --noconfirm < /tmp/packages_build && \
            /var/tmp/* \
            "/home/${BUILD_USER}/.cache/pikaur/build" && sync
     
-ENTRYPOINT [ "/opt/copy_pkgs.sh", "${REPO}" ]
+ENTRYPOINT [ "/opt/copy_pkgs.sh", "/opt/repository/files/aur/os/x86_64" ]
 
