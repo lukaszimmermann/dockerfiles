@@ -5,10 +5,9 @@ COPY packages /tmp/packages
 COPY copy_pkgs.sh /opt/copy_pkgs.sh
 COPY install_aur.sh /opt/install_aur.sh 
 
-ENV BUILD_USER  pkg
-ENV BUILD_MOUNT "/opt/repository"
-ENV BUILD_REPO  "${BUILD_MOUNT}/files/aur/os/x86_64"
-ENV GOPATH      "/home/${BUILD_USER}/go"
+ENV REPO "/opt/repository/files/aur/os/x86_64"
+ENV BUILD_USER pkg
+ENV GOPATH "/home/${BUILD_USER}/go"
 
 SHELL [ "/bin/bash", "-euo", "pipefail", "-c" ]
 
@@ -88,17 +87,8 @@ RUN pacman -Syyu --noconfirm \
       wget > /dev/null 2>&1 && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
     echo "${BUILD_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
-    rm -rf /var/cache/pacman/pkg && sync
-
-# Install pikaur (AUR helper)
-USER "${BUILD_USER}"
-WORKDIR /tmp
-RUN /opt/install_aur.sh pikaur && sync
-
-# Assemble list of packages
-USER root
-WORKDIR /tmp
-RUN \
+    rm -rf /var/cache/pacman/pkg && \
+    su -c'/opt/install_aur.sh pikaur' "${BUILD_USER}" && \
     # Assemble list of all package names available in core, extra and community 
     pacman -Si | grep '^Name' | awk '{print $3}' | sort > /tmp/packages_all && \
     # Split packages into pacman and AUR packages
@@ -107,13 +97,84 @@ RUN \
     comm -23 /tmp/packages_sorted /tmp/packages_all > /tmp/packages_aur && \
     rm /tmp/packages_all  && \
     chmod 0444 /tmp/packages_aur && \
-    mkdir -p "${BUILD_REPO}" && sync
-
-USER "${BUILD_USER}"
-WORKDIR /tmp
-RUN gpg --recv-keys 702353E0F7E48EDB && \
-    gpg --recv-keys EB774491D9FF06E2 && \
-    xargs pikaur -Sw --noconfirm < /tmp/packages_aur && sync
-
-ENTRYPOINT [ "copy_pkgs.sh", "/opt/repository/files/aur/os/x86_64" ]
+    su -c'gpg --recv-keys 702353E0F7E48EDB' "${BUILD_USER}" && \
+    su -c'gpg --recv-keys EB774491D9FF06E2' "${BUILD_USER}" && \
+    su -c'xargs pikaur -Sw --noconfirm < /tmp/packages_aur' "${BUILD_USER}" && \
+    pacman -Rns --noconfirm \
+      automake \
+      awk \
+      binutils \
+      diffutils \
+      fakeroot \
+      file \
+      gcc \
+      gettext \
+      git \
+      gnupg \
+      grep \
+      go-pie \
+      make \
+      patch \
+      pkgconf \
+      pyalpm \
+      sudo \
+      unzip \
+      which \
+      libxss \
+      gtk3 \
+      iso-codes \
+      avahi \
+      brotli \
+      polkit \
+      libgusb \
+      mesa \
+      pango \
+      dconf \
+      cairo \
+      fontconfig \
+      freetype2 \
+      python2 \
+      python2-pyparsing  \
+      python2-setuptools \
+      python2-appdirs \
+      python2-six \
+      python \
+      python-six \
+      python-setuptools \
+      r \
+      zip \
+      openssl \
+      pixman \
+      libyaml \
+      lib32-glibc \
+      ruby \
+      gperf \
+      rubygems \
+      lib32-gcc-libs \
+      qt5-webkit \
+      bison \
+      flex \
+      jdk11-openjdk \
+      speexdsp \
+      autoconf \
+      gtk2 \
+      libidn \
+      libxaw \
+      speex \
+      nodejs \
+      asar \
+      c-ares \
+      hunspell \
+      libevent \
+      libvpc \
+      mailcap \
+      mozilla-common \
+      pikaur \
+      startup-notification \
+      wget > /dev/null 2>&1 && \
+      pacman -Sc --noconfirm > /dev/null 2>&1 && \
+      pacman -Scc --noconfirm > /dev/null 2>&1 && \
+      rm -rf /tmp/* /var/tmp*
+    
+ENTRYPOINT [ "/opt/copy_pkgs.sh", "${REPO}" ]
 
