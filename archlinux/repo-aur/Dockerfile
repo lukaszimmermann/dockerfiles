@@ -97,7 +97,6 @@ RUN pacman -Syyu --noconfirm \
     rm /tmp/packages_all  && \
     chmod 0444 /tmp/packages_aur && \
     su -c'gpg --recv-keys 702353E0F7E48EDB' "${BUILD_USER}" && \
-    su -c'gpg --recv-keys EB774491D9FF06E2' "${BUILD_USER}" && \
     su -c'xargs pikaur -Sw --noconfirm < /tmp/packages_aur' "${BUILD_USER}" && \
     pacman -Rns --noconfirm \
       automake \
@@ -172,7 +171,7 @@ RUN pacman -Syyu --noconfirm \
       wget > /dev/null 2>&1 && \
       pacman -Sc --noconfirm > /dev/null 2>&1 && \
       pacman -Scc --noconfirm > /dev/null 2>&1 && \
-      rm -rf /tmp/* /var/tmp*
+      rm -rf /tmp/* /var/tmp* && sync
     
 ENTRYPOINT [ "/opt/copy_pkgs.sh", "${REPO}" ]
 
