@@ -16,6 +16,7 @@ SHELL [ "/bin/bash", "-euo", "pipefail", "-c" ]
 USER root
 WORKDIR /tmp
 RUN pacman -Syyu --noconfirm \
+      automake \
       awk \
       binutils \
       diffutils \
