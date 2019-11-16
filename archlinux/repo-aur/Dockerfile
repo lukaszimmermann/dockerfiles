@@ -18,6 +18,7 @@ RUN pacman -Syyu --noconfirm \
       automake \
       awk \
       binutils \
+      clang \
       diffutils \
       fakeroot \
       file \
@@ -42,12 +43,16 @@ RUN pacman -Syyu --noconfirm \
       polkit \
       libgusb \
       mesa \
+      rsync \
       pango \
       dconf \
       cairo \
       fontconfig \
       freetype2 \
       python2 \
+      python2-typing \
+      python2-requests \
+      python2-sphinx \
       python2-pyparsing  \
       python2-setuptools \
       python2-appdirs \
@@ -82,6 +87,10 @@ RUN pacman -Syyu --noconfirm \
       libevent \
       mailcap \
       mozilla-common \
+      liblqr \
+      libraqm \
+      imagemagick \
+      cmake \
       startup-notification \
       wget > /dev/null 2>&1 && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
@@ -102,6 +111,7 @@ RUN pacman -Syyu --noconfirm \
       automake \
       awk \
       binutils \
+      clang \
       diffutils \
       fakeroot \
       file \
@@ -126,12 +136,16 @@ RUN pacman -Syyu --noconfirm \
       polkit \
       libgusb \
       mesa \
+      rsync \
       pango \
       dconf \
       cairo \
       fontconfig \
       freetype2 \
       python2 \
+      python2-typing \
+      python2-requests \
+      python2-sphinx \
       python2-pyparsing  \
       python2-setuptools \
       python2-appdirs \
@@ -166,6 +180,10 @@ RUN pacman -Syyu --noconfirm \
       libevent \
       mailcap \
       mozilla-common \
+      liblqr \
+      libraqm \
+      imagemagick \
+      cmake \
       pikaur \
       startup-notification \
       wget > /dev/null 2>&1 && \

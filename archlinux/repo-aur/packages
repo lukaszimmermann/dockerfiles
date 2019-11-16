@@ -321,8 +321,6 @@ startup-notification
 strace
 sudo
 swagger-editor-git
-swift
-swift-lldb
 swig3
 sysfsutils
 system-config-printer
