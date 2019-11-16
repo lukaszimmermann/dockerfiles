@@ -65,6 +65,9 @@ RUN pacman -Syyu --noconfirm \
       gperf \
       rubygems \
       lib32-gcc-libs \
+      qt5-webkit \
+      bison \
+      flex \
       jdk11-openjdk > /dev/null 2>&1 && \
     gpg --recv-keys 702353E0F7E48EDB > /dev/null 2>&1 && \
     useradd -m -s /bin/bash "${BUILD_USER}" && \
