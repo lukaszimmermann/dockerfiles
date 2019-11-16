@@ -2,7 +2,7 @@ asar
 autoconf
 automake
 avahi
-awk
+gawk
 binutils
 bison
 brotli
