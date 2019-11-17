@@ -2,7 +2,6 @@ FROM archlinux:latest
 LABEL maintainer="luk.zim91@gmail.com"
 
 COPY packages packages_build /tmp/
-COPY copy_pkgs.sh install_aur.sh /opt/
 COPY mirrorlist /etc/pacman.d/mirrorlist
 
 ENV REPO "/opt/repository/files/aur/os/x86_64"
@@ -28,6 +27,8 @@ RUN xargs pacman -Syyu --noconfirm < /tmp/packages_build && \
     chmod 0444 /opt/packages_aur && \
     su -c'gpg --recv-keys 702353E0F7E48EDB' "${BUILD_USER}" && \
     su -c'xargs pikaur -Sw --noconfirm < /opt/packages_aur' "${BUILD_USER}" && \
+    cd "/home/${BUILD_USER}/.cache/pikaur/pkg" && \
+    find . -iname '*pkg.tar.xz' -type f -print0 | xargs -0 repo-add -v aur.db.tar.gz && \
     pacman -Rns --noconfirm pikaur && \
     xargs pacman -Rns --noconfirm < /tmp/packages_build && \
     pacman -Sc --noconfirm  && \
@@ -35,6 +36,4 @@ RUN xargs pacman -Syyu --noconfirm < /tmp/packages_build && \
     rm -rf /tmp/* \
            /var/tmp/* \
            "/home/${BUILD_USER}/.cache/pikaur/build" && sync
-    
-ENTRYPOINT [ "/opt/copy_pkgs.sh", "/opt/repository/files/aur/os/x86_64" ]
 
