@@ -1,6 +1,7 @@
 FROM archlinux:latest
 LABEL maintainer="luk.zim91@gmail.com"
 
+COPY install_aur.sh /opt/ 
 COPY packages packages_build /tmp/
 COPY mirrorlist /etc/pacman.d/mirrorlist
 
