@@ -92,6 +92,7 @@ python-wrapt
 python-yaml
 qt5-script
 qt5-svg
+qt5-tools
 qt5-webkit
 r
 rsync
