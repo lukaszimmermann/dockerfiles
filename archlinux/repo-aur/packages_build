@@ -16,6 +16,7 @@ dconf
 diffutils
 fakeroot
 file
+flac
 flex
 fontconfig
 freetype2
@@ -37,6 +38,7 @@ libevent
 libgusb
 libidn
 liblqr
+libpulse
 libraqm
 libxaw
 libxss
