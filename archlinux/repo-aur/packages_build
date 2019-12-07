@@ -114,3 +114,7 @@ libfontenc
 ttf-dejavu
 xorg-fonts-encodings
 xorg-mkfontscale
+libidn11
+libjpeg6-turbo
+libpng12
+libxp
