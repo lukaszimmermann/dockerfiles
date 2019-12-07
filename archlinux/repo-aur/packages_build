@@ -110,3 +110,7 @@ unzip
 wget
 which
 zip
+libfontenc
+ttf-dejavu
+xorg-fonts-encodings
+xorg-mkfontscale
