@@ -307,6 +307,7 @@ rstudio-desktop-bin
 rsync
 ruby
 rubymine
+ruby-gitlab-grit
 ruby-gollum
 rxvt-unicode
 s-nail
