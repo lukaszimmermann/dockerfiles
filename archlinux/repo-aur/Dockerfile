@@ -5,7 +5,6 @@ COPY install_aur.sh /opt/
 COPY packages packages_build /tmp/
 COPY mirrorlist /etc/pacman.d/mirrorlist
 
-ENV REPO "/opt/repository/files/aur/os/x86_64"
 ENV BUILD_USER pkg
 ENV GOPATH "/home/${BUILD_USER}/go"
 
